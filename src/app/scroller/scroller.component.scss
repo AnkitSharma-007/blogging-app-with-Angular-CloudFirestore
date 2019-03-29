@@ -1,0 +1,23 @@
+.scroll-to-top {
+  display: block;
+  background: rgba(100, 100, 100, 0.4);
+  color: #ffffff;
+  bottom: 4%;
+  cursor: pointer;
+  position: fixed;
+  right: 20px;
+  z-index: 999;
+  font-size: 24px;
+  text-align: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+
+  .fa {
+    font-weight: 900;
+  }
+}
+
+.scroll-to-top:hover {
+  background-color: #b2b2b2;
+}

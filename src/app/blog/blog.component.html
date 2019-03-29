@@ -1,0 +1,15 @@
+<div class="docs-example-viewer-wrapper">
+  <h1 class="entry-title">{{postData.title}}</h1>
+  <mat-card-subtitle class="blog-info">
+    <i class="fa fa-calendar" aria-hidden="true"></i> {{postData.createdDate | date:'longDate'}}
+    <i class="fa fa-user" aria-hidden="true"></i> {{postData.author}}
+  </mat-card-subtitle>
+  <mat-divider></mat-divider>
+  <div class="docs-example-viewer-body">
+    <div [innerHTML]="postData.content">
+    </div>
+  </div>
+</div>
+<mat-divider></mat-divider>
+<app-comments [blogId]="postId"></app-comments>
+<app-scroller></app-scroller>

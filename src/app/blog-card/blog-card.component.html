@@ -1,0 +1,22 @@
+<div *ngFor="let post of blogPost">
+  <mat-card class="blog-card mat-elevation-z2">
+    <mat-card-content>
+      <a class="blog-title" [routerLink]="['/blog/', post.postId, post.title | slug]">
+        <h2>{{ post.title}} </h2>
+      </a>
+    </mat-card-content>
+    <mat-card-content>
+      <div [innerHTML]="post.content | excerpt"></div>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <mat-card-actions align="end">
+      <ng-container *ngIf="appUser?.isAdmin">
+        <button mat-raised-button color="accent" [routerLink]="['/editpost',post.postId]">Edit</button>
+        <button mat-raised-button color="warn" (click)="delete(post.postId)">Delete</button>
+      </ng-container>
+      <span class="spacer"></span>
+      <button mat-raised-button color="primary" [routerLink]="['/blog/', post.postId, post.title | slug]">Read
+        More</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

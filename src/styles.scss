@@ -1,0 +1,117 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~bootstrap/dist/css/bootstrap.css";
+
+body {
+  background-color: #fafafa;
+}
+
+.nav-bar {
+  background-color: #1565C0;
+  color: #FFFFFF;
+}
+
+button:focus {
+  outline: none;
+  border: 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.ck-editor__editable {
+  max-height: 350px;
+  min-height: 350px;
+}
+
+pre {
+  display: block;
+  padding: 9.5px;
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.42857143;
+  color: #333;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.docs-example-viewer-body {
+  padding: 20px;
+  align-content: center;
+  align-items: center;
+  font-size: 14px;
+}
+
+.docs-example-viewer-wrapper {
+  border: 1px solid rgba(0, 0, 0, .03);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .24), 0 0 2px rgba(0, 0, 0, .12);
+  border-radius: 4px;
+  margin: 1em auto;
+  background-color: #FFFFFF;
+}
+
+.entry-title {
+  margin: 20px;
+}
+
+.blog-info {
+  margin: 15px 20px 10px;
+  align-content: center;
+  align-items: center;
+
+  .fa-user {
+    margin-left: 10px;
+  }
+}
+
+.nav-bar {
+  background-color: #1565C0;
+  color: #FFFFFF;
+  position: fixed;
+  top: 0;
+  z-index: 99;
+}
+
+blockquote {
+  display: block;
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 17.5px;
+  border-left: 5px solid #eee;
+}
+
+.comment-card {
+  margin: 10px 0 15px 0;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.container {
+  padding-top: 60px;
+}
+
+.right-panel {
+  margin-top: 15px;
+}
+
+.authorimagecontainer {
+  text-align: center;
+
+}
+
+.rightdivtext {
+  color: #636467;
+  text-transform: uppercase;
+  padding: 2px;
+}
+
+.rightpanel-card {
+  margin-bottom: 15px;
+}

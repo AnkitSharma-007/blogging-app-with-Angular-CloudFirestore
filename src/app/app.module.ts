@@ -1,0 +1,69 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
+import { environment } from '../environments/environment';
+
+import { AppComponent } from './app.component';
+import { NgMaterialModule } from './ng-material/ng-material.module';
+import { BlogComponent } from './blog/blog.component';
+import { CommentsComponent } from './comments/comments.component';
+import { HomeComponent } from './home/home.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { RightpanelComponent } from './rightpanel/rightpanel.component';
+import { ScrollerComponent } from './scroller/scroller.component';
+import { BlogEditorComponent } from './blog-editor/blog-editor.component';
+import { BlogCardComponent } from './blog-card/blog-card.component';
+import { Excerpt } from './customPipes/excerpt';
+import { Slug } from './customPipes/slug';
+import { AuthGuardService } from './services/auth-guard.service';
+import { AdminAuthGuardService } from './services/admin-auth-guard.service';
+import { BlogService } from './services/blog.service';
+import { AuthService } from './services/auth.service';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    BlogComponent,
+    CommentsComponent,
+    HomeComponent,
+    NavBarComponent,
+    RightpanelComponent,
+    ScrollerComponent,
+    BlogEditorComponent,
+    BlogCardComponent,
+    Excerpt,
+    Slug
+  ],
+  imports: [
+    AngularFireAuthModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    NgMaterialModule,
+    CKEditorModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule.forRoot([
+      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'addpost', component: BlogEditorComponent, canActivate: [AuthGuardService, AdminAuthGuardService] },
+      { path: 'editpost/:id', component: BlogEditorComponent, canActivate: [AuthGuardService, AdminAuthGuardService] },
+      { path: 'blog/:id/:slug', component: BlogComponent },
+      { path: '**', component: HomeComponent }
+    ],
+      { onSameUrlNavigation: 'reload' }),
+  ],
+  providers: [{ provide: FirestoreSettingsToken, useValue: {} },
+    BlogService,
+    AuthService,
+    AuthGuardService,
+    AdminAuthGuardService],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }

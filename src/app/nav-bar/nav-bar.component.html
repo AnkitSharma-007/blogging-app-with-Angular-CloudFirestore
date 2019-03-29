@@ -1,0 +1,22 @@
+<mat-toolbar class="nav-bar mat-elevation-z2">
+  <button mat-button [routerLink]='["/"]'> My blog </button>
+  <ng-container *ngIf="appUser?.isAdmin">
+    <button mat-button [routerLinkActive]='["link-active"]' [routerLink]='["/addpost"]'>
+      Add Post
+    </button>
+  </ng-container>
+  <span class="spacer"></span>
+
+  <ng-template #anonymousUser>
+    <button mat-button (click)="login()">Login with Google</button>
+  </ng-template>
+  <ng-container *ngIf="appUser; else anonymousUser">
+    <img mat-card-avatar src={{appUser.photoURL}}>
+    <button mat-button [matMenuTriggerFor]="menu">
+      {{appUser.name}}<mat-icon>arrow_drop_down</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)=logout()>Logout</button>
+    </mat-menu>
+  </ng-container>
+</mat-toolbar>
