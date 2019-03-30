@@ -1,9 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AppUser } from '../models/appuser';
-import { Comments } from '../models/comment';
+
 import { DatePipe } from '@angular/common';
-import { CommentService } from '../services/comment.service';
-import { AuthService } from '../services/auth.service';
+import { AppUser } from 'src/app/models/appuser';
+import { Comments } from 'src/app/models/comment';
+import { CommentService } from 'src/app/services/comment.service';
+import { AuthService } from 'src/app/services/auth.service';
+
 
 @Component({
   selector: 'app-comments',

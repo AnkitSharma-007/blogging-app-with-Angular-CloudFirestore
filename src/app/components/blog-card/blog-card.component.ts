@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Post } from '../models/post';
-import { AppUser } from '../models/appuser';
-import { BlogService } from '../services/blog.service';
-import { CommentService } from '../services/comment.service';
-import { AuthService } from '../services/auth.service';
+import { Post } from 'src/app/models/Post';
+import { AppUser } from 'src/app/models/appuser';
+import { BlogService } from 'src/app/services/blog.service';
+import { CommentService } from 'src/app/services/comment.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-blog-card',

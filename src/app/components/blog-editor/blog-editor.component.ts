@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Post } from '../models/post';
-import { AppUser } from '../models/appuser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import { BlogService } from '../services/blog.service';
-import { AuthService } from '../services/auth.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { Post } from 'src/app/models/Post';
+import { AppUser } from 'src/app/models/appuser';
+import { BlogService } from 'src/app/services/blog.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-blog-editor',
