@@ -8,6 +8,9 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
+import { ShareButtonsModule } from '@ngx-share/buttons';
+import { ShareButtonsConfig } from '@ngx-share/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NgMaterialModule } from './ng-material/ng-material.module';
@@ -25,6 +28,14 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { AdminAuthGuardService } from './services/admin-auth-guard.service';
 import { BlogService } from './services/blog.service';
 import { AuthService } from './services/auth.service';
+import { SocialShareComponent } from './components/social-share/social-share.component';
+
+const customConfig: ShareButtonsConfig = {
+  include: ['facebook', 'twitter', 'linkedin', 'pinterest', 'reddit', 'whatsapp', 'print', 'email'],
+  theme: 'circles-dark',
+  autoSetMeta: true,
+  twitterAccount: 'ankitsharma_007'
+};
 
 @NgModule({
   declarations: [
@@ -38,9 +49,12 @@ import { AuthService } from './services/auth.service';
     BlogEditorComponent,
     BlogCardComponent,
     Excerpt,
-    Slug
+    Slug,
+    SocialShareComponent
   ],
   imports: [
+    HttpClientModule,
+    ShareButtonsModule.withConfig(customConfig),
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
