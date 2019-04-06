@@ -11,6 +11,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - Custom pipes
 - Auth-guards in Angular
 - Authentication and Authorization
+- Login with Google using Firebase
 - Social share option using ngx-share
 
 # Live Demo
