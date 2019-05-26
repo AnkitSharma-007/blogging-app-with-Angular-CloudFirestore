@@ -12,7 +12,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - Auth-guards in Angular
 - Authentication and Authorization
 - Login with Google using Firebase
-- Social share option using ngx-share
+- Social share option using [ngx-share](https://github.com/MurhafSousli/ngx-sharebuttons)
+- Client-Side pagination using [ngx-pagination](https://github.com/michaelbromley/ngx-pagination)
 
 # Live Demo
 
@@ -20,4 +21,3 @@ https://blogsite-30c69.firebaseapp.com/
 
 # License
 [MIT](https://github.com/AnkitSharma-007/blogging-app-with-Angular-CloudFirestore/blob/master/LICENSE)
-

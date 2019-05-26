@@ -1,0 +1,9 @@
+.my-pagination /deep/ .ngx-pagination {
+    margin: 10px 0px 10px 0px;
+    padding-inline-start: 0px;
+  }
+  .paginator-controls {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+  }

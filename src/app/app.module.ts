@@ -29,6 +29,8 @@ import { AdminAuthGuardService } from './services/admin-auth-guard.service';
 import { BlogService } from './services/blog.service';
 import { AuthService } from './services/auth.service';
 import { SocialShareComponent } from './components/social-share/social-share.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { PaginatorComponent } from './components/paginator/paginator.component';
 
 const customConfig: ShareButtonsConfig = {
   include: ['facebook', 'twitter', 'linkedin', 'pinterest', 'reddit', 'whatsapp', 'print', 'email'],
@@ -50,9 +52,11 @@ const customConfig: ShareButtonsConfig = {
     BlogCardComponent,
     Excerpt,
     Slug,
-    SocialShareComponent
+    SocialShareComponent,
+    PaginatorComponent
   ],
   imports: [
+    NgxPaginationModule,
     HttpClientModule,
     ShareButtonsModule.withConfig(customConfig),
     AngularFireAuthModule,
@@ -66,6 +70,7 @@ const customConfig: ShareButtonsConfig = {
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'page/:pagenum', component: HomeComponent },
       { path: 'addpost', component: BlogEditorComponent, canActivate: [AuthGuardService, AdminAuthGuardService] },
       { path: 'editpost/:id', component: BlogEditorComponent, canActivate: [AuthGuardService, AdminAuthGuardService] },
       { path: 'blog/:id/:slug', component: BlogComponent },

@@ -1,11 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-
 import { DatePipe } from '@angular/common';
 import { AppUser } from 'src/app/models/appuser';
 import { Comments } from 'src/app/models/comment';
 import { CommentService } from 'src/app/services/comment.service';
 import { AuthService } from 'src/app/services/auth.service';
-
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-comments',
@@ -24,7 +23,8 @@ export class CommentsComponent implements OnInit {
 
   constructor(private datePipe: DatePipe,
     private commentService: CommentService,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private snackBarService: SnackbarService) {
 
     authService.appUser$.subscribe(appUser => this.appUser = appUser);
   }
@@ -42,9 +42,19 @@ export class CommentsComponent implements OnInit {
   }
 
   getAllComments() {
-    this.commentService.getComments(this.blogId).subscribe(result => {
+    this.commentService.getAllCommentsForBlog(this.blogId).subscribe(result => {
       this.commentList = result;
     });
+  }
+
+  deleteComment(commentId) {
+    if (confirm('Do you want to delete this comment!!!')) {
+      this.commentService.deleteSingleComment(commentId).then(
+        () => {
+          this.snackBarService.showSnackBar('Comment Deleted successfully');
+        }
+      );
+    }
   }
 
   login() {

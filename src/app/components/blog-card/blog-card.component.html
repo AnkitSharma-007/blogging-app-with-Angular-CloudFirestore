@@ -1,4 +1,4 @@
-<div *ngFor="let post of blogPost">
+<div *ngFor="let post of blogPost | paginate: config">
   <mat-card class="blog-card mat-elevation-z2">
     <mat-card-content>
       <a class="blog-title" [routerLink]="['/blog/', post.postId, post.title | slug]">

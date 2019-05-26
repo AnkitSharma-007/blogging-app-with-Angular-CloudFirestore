@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Post } from 'src/app/models/Post';
 import { AppUser } from 'src/app/models/appuser';
 import { BlogService } from 'src/app/services/blog.service';
 import { CommentService } from 'src/app/services/comment.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { ActivatedRoute } from '@angular/router';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-blog-card',
@@ -12,17 +14,28 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class BlogCardComponent implements OnInit {
 
+  @Input()
+  config: any;
+
   blogPost: Post[] = [];
   appUser: AppUser;
 
   constructor(private blogService: BlogService,
     private commentService: CommentService,
-    private authService: AuthService) {
-    authService.appUser$.subscribe(appUser => this.appUser = appUser);
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    private snackBarService: SnackbarService) {
+
+    this.authService.appUser$.subscribe(appUser => this.appUser = appUser);
   }
 
   ngOnInit() {
-    this.getBlogPosts();
+    this.route.params.subscribe(
+      params => {
+        this.config.currentPage = +params['pagenum'];
+        this.getBlogPosts();
+      }
+    );
   }
 
   getBlogPosts() {
@@ -34,8 +47,9 @@ export class BlogCardComponent implements OnInit {
   delete(postId) {
     if (confirm('Are you sure')) {
       this.blogService.deletePost(postId).then(
-        result => {
-          this.commentService.deleteComment(postId);
+        () => {
+          this.commentService.deleteAllCommentForBlog(postId);
+          this.snackBarService.showSnackBar('Blog post deleted successfully');
         }
       );
     }

@@ -3,3 +3,7 @@ a:not([href]):not([tabindex]) {
   cursor: pointer;
   color: #1565C0;
 }
+.comment-card-title{
+  display: flex;
+  justify-content: space-between;
+}

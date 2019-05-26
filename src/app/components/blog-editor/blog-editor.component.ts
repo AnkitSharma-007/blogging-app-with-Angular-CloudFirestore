@@ -30,7 +30,7 @@ export class BlogEditorComponent implements OnInit {
     if (this._route.snapshot.params['id']) {
       this.postId = this._route.snapshot.paramMap.get('id');
     }
-    authService.appUser$.subscribe(appUser => this.appUser = appUser);
+    this.authService.appUser$.subscribe(appUser => this.appUser = appUser);
   }
 
   ngOnInit() {
@@ -52,7 +52,7 @@ export class BlogEditorComponent implements OnInit {
   saveBlogPost() {
     if (this.postId) {
       this.blogService.updatePost(this.postId, this.postData).then(
-        result => {
+        () => {
           this._router.navigate(['/']);
         }
       );
@@ -60,7 +60,7 @@ export class BlogEditorComponent implements OnInit {
       this.postData.createdDate = this.datePipe.transform(Date.now(), 'MM-dd-yyyy HH:mm');
       this.postData.author = this.appUser.name;
       this.blogService.createPost(this.postData).then(
-        result => {
+        () => {
           this._router.navigate(['/']);
         }
       );

@@ -1,0 +1,15 @@
+<div class="paginator-controls">
+  <div>
+    <pagination-controls (pageChange)="pageChange($event)" class="my-pagination"></pagination-controls>
+  </div>
+  <div>
+    <mat-form-field>
+      <mat-label>Items per page: </mat-label>
+      <mat-select [(value)]="this.config.itemsPerPage" (selectionChange)="changePageItemCount($event)">
+        <mat-option *ngFor="let page of pageSizeOptions" [value]="page">
+          {{ page }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>

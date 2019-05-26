@@ -35,7 +35,20 @@
   </mat-card-content>
 </mat-card>
 <mat-card *ngFor="let comment of commentList" class="comment-card mat-elevation-z2">
-  <mat-card-title>{{comment.commentedBy}}</mat-card-title>
+  <mat-card-title>
+    <div class="comment-card-title">
+      <div>
+        {{comment.commentedBy}}
+      </div>
+      <div *ngIf="appUser?.isAdmin">
+        <button mat-icon-button matTooltip="Delete comment" matTooltipPosition="before" color="accent"
+          (click)="deleteComment(comment.commentId)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card-title>
+
   <mat-card-subtitle>{{comment.commentDate | date:'medium'}}</mat-card-subtitle>
   <mat-card-content>
     <p>{{comment.content}}</p>

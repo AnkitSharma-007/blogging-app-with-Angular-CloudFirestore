@@ -1,4 +1,5 @@
 export class Comments {
+    commentId: string;
     blogId: string;
     email: string;
     commentedBy: string;
