@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Post } from 'src/app/models/Post';
 import { AppUser } from 'src/app/models/appuser';
 import { BlogService } from 'src/app/services/blog.service';
@@ -14,8 +14,8 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 })
 export class BlogCardComponent implements OnInit {
 
-  @Input()
   config: any;
+  pageSizeOptions = [];
 
   blogPost: Post[] = [];
   appUser: AppUser;
@@ -27,6 +27,13 @@ export class BlogCardComponent implements OnInit {
     private snackBarService: SnackbarService) {
 
     this.authService.appUser$.subscribe(appUser => this.appUser = appUser);
+
+    this.pageSizeOptions = [2, 4, 6];
+
+    this.config = {
+      currentPage: 1,
+      itemsPerPage: this.pageSizeOptions[0]
+    };
   }
 
   ngOnInit() {
