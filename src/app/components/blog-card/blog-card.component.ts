@@ -30,10 +30,13 @@ export class BlogCardComponent implements OnInit {
 
     this.pageSizeOptions = [2, 4, 6];
 
+    const val = sessionStorage.getItem('pageSize');
+
     this.config = {
       currentPage: 1,
-      itemsPerPage: this.pageSizeOptions[0]
+      itemsPerPage: val ? +val : this.pageSizeOptions[0]
     };
+
   }
 
   ngOnInit() {

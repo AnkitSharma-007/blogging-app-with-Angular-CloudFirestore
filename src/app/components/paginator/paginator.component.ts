@@ -24,6 +24,7 @@ export class PaginatorComponent implements OnInit {
   }
 
   changePageItemCount(selectedItem) {
+    sessionStorage.setItem('pageSize', selectedItem.value);
     this.config.itemsPerPage = selectedItem.value;
   }
 
