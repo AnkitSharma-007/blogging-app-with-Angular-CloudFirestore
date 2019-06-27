@@ -78,11 +78,7 @@ const customConfig: ShareButtonsConfig = {
     ],
       { onSameUrlNavigation: 'reload' }),
   ],
-  providers: [{ provide: FirestoreSettingsToken, useValue: {} },
-    BlogService,
-    AuthService,
-    AuthGuardService,
-    AdminAuthGuardService],
+  providers: [{ provide: FirestoreSettingsToken, useValue: {} }, AngularFireModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
