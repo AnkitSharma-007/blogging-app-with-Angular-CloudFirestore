@@ -1,0 +1,29 @@
+.docs-example-viewer-body {
+    padding: 20px;
+    align-content: center;
+    align-items: center;
+    font-size: 14px;
+  }
+  
+  .docs-example-viewer-wrapper {
+    border: 1px solid rgba(0, 0, 0, .03);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .24), 0 0 2px rgba(0, 0, 0, .12);
+    border-radius: 4px;
+    margin: 1em auto;
+    background-color: #FFFFFF;
+  }
+  
+  .entry-title {
+    margin: 20px;
+  }
+  
+  .blog-info {
+    margin: 15px 20px 10px;
+    align-content: center;
+    align-items: center;
+  
+    .fa-user {
+      margin-left: 10px;
+    }
+  }
+  

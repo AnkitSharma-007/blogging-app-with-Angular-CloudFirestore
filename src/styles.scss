@@ -8,18 +8,8 @@ body {
   background-color: #fafafa;
 }
 
-.nav-bar {
-  background-color: #1565C0;
-  color: #FFFFFF;
-}
-
-button:focus {
-  outline: none;
-  border: 0;
-}
-
-.full-width {
-  width: 100%;
+.container {
+  padding-top: 60px;
 }
 
 .ck-editor__editable {
@@ -41,43 +31,6 @@ pre {
   border-radius: 4px;
 }
 
-.docs-example-viewer-body {
-  padding: 20px;
-  align-content: center;
-  align-items: center;
-  font-size: 14px;
-}
-
-.docs-example-viewer-wrapper {
-  border: 1px solid rgba(0, 0, 0, .03);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, .24), 0 0 2px rgba(0, 0, 0, .12);
-  border-radius: 4px;
-  margin: 1em auto;
-  background-color: #FFFFFF;
-}
-
-.entry-title {
-  margin: 20px;
-}
-
-.blog-info {
-  margin: 15px 20px 10px;
-  align-content: center;
-  align-items: center;
-
-  .fa-user {
-    margin-left: 10px;
-  }
-}
-
-.nav-bar {
-  background-color: #1565C0;
-  color: #FFFFFF;
-  position: fixed;
-  top: 0;
-  z-index: 99;
-}
-
 blockquote {
   display: block;
   padding: 10px 20px;
@@ -86,39 +39,14 @@ blockquote {
   border-left: 5px solid #eee;
 }
 
-.comment-card {
-  margin: 10px 0 15px 0;
-}
-
 .spacer {
   flex: 1 1 auto;
 }
 
-.container {
-  padding-top: 60px;
-}
-
-.right-panel {
-  margin-top: 15px;
-}
-
-.authorimagecontainer {
-  text-align: center;
-
-}
-
-.rightdivtext {
-  color: #636467;
-  text-transform: uppercase;
-  padding: 2px;
-}
-
-.rightpanel-card {
-  margin-bottom: 15px;
-}
 img{
   max-width: 100%;
 }
+
 .snackbar-ribon {
   color: #FFFFFF;
   background: #17a2b8;

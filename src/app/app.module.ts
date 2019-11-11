@@ -6,7 +6,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import { ShareButtonsModule } from '@ngx-share/buttons';
 import { ShareButtonsConfig } from '@ngx-share/core';
@@ -18,7 +18,6 @@ import { BlogComponent } from './components/blog/blog.component';
 import { CommentsComponent } from './components/comments/comments.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
-import { RightpanelComponent } from './components/rightpanel/rightpanel.component';
 import { ScrollerComponent } from './components/scroller/scroller.component';
 import { BlogEditorComponent } from './components/blog-editor/blog-editor.component';
 import { BlogCardComponent } from './components/blog-card/blog-card.component';
@@ -26,11 +25,10 @@ import { Excerpt } from './customPipes/excerpt';
 import { Slug } from './customPipes/slug';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AdminAuthGuardService } from './services/admin-auth-guard.service';
-import { BlogService } from './services/blog.service';
-import { AuthService } from './services/auth.service';
 import { SocialShareComponent } from './components/social-share/social-share.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PaginatorComponent } from './components/paginator/paginator.component';
+import { AuthorProfileComponent } from './components/author-profile/author-profile.component';
 
 const customConfig: ShareButtonsConfig = {
   include: ['facebook', 'twitter', 'linkedin', 'pinterest', 'reddit', 'whatsapp', 'print', 'email'],
@@ -46,14 +44,14 @@ const customConfig: ShareButtonsConfig = {
     CommentsComponent,
     HomeComponent,
     NavBarComponent,
-    RightpanelComponent,
     ScrollerComponent,
     BlogEditorComponent,
     BlogCardComponent,
     Excerpt,
     Slug,
     SocialShareComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    AuthorProfileComponent
   ],
   imports: [
     NgxPaginationModule,
@@ -78,7 +76,7 @@ const customConfig: ShareButtonsConfig = {
     ],
       { onSameUrlNavigation: 'reload' }),
   ],
-  providers: [{ provide: FirestoreSettingsToken, useValue: {} }, AngularFireModule],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

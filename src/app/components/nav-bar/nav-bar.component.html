@@ -11,7 +11,7 @@
     <button mat-button (click)="login()">Login with Google</button>
   </ng-template>
   <ng-container *ngIf="appUser; else anonymousUser">
-    <img mat-card-avatar src={{appUser.photoURL}}>
+    <img mat-card-avatar class="user-avatar" src={{appUser.photoURL}}>
     <button mat-button [matMenuTriggerFor]="menu">
       {{appUser.name}}<mat-icon>arrow_drop_down</mat-icon>
     </button>

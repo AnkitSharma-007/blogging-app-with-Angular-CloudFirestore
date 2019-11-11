@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RightpanelComponent } from './rightpanel.component';
+import { AuthorProfileComponent } from './author-profile.component';
 
-describe('RightpanelComponent', () => {
-  let component: RightpanelComponent;
-  let fixture: ComponentFixture<RightpanelComponent>;
+describe('AuthorProfileComponent', () => {
+  let component: AuthorProfileComponent;
+  let fixture: ComponentFixture<AuthorProfileComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RightpanelComponent ]
+      declarations: [ AuthorProfileComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RightpanelComponent);
+    fixture = TestBed.createComponent(AuthorProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
