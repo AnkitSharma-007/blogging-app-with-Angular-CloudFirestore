@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -6,6 +6,8 @@ import { Post } from 'src/app/models/Post';
 import { AppUser } from 'src/app/models/appuser';
 import { BlogService } from 'src/app/services/blog.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-blog-editor',
@@ -13,7 +15,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./blog-editor.component.scss'],
   providers: [DatePipe]
 })
-export class BlogEditorComponent implements OnInit {
+export class BlogEditorComponent implements OnInit, OnDestroy {
 
   public Editor = ClassicEditor;
   ckeConfig: any;
@@ -21,6 +23,7 @@ export class BlogEditorComponent implements OnInit {
   appUser: AppUser;
   formTitle = 'Add';
   postId;
+  private unsubscribe$ = new Subject<void>();
 
   constructor(private _route: ActivatedRoute,
     private datePipe: DatePipe,
@@ -37,11 +40,13 @@ export class BlogEditorComponent implements OnInit {
     this.setEditorConfig();
     if (this.postId) {
       this.formTitle = 'Edit';
-      this.blogService.getPostbyId(this.postId).subscribe(
-        result => {
-          this.setPostFormData(result);
-        }
-      );
+      this.blogService.getPostbyId(this.postId)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          result => {
+            this.setPostFormData(result);
+          }
+        );
     }
   }
   setPostFormData(postFormData) {
@@ -89,4 +94,8 @@ export class BlogEditorComponent implements OnInit {
     this._router.navigate(['/']);
   }
 
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 }

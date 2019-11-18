@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Post } from 'src/app/models/Post';
 import { AppUser } from 'src/app/models/appuser';
 import { BlogService } from 'src/app/services/blog.service';
@@ -6,19 +6,22 @@ import { CommentService } from 'src/app/services/comment.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-blog-card',
   templateUrl: './blog-card.component.html',
   styleUrls: ['./blog-card.component.scss']
 })
-export class BlogCardComponent implements OnInit {
+export class BlogCardComponent implements OnInit, OnDestroy {
 
   config: any;
   pageSizeOptions = [];
 
   blogPost: Post[] = [];
   appUser: AppUser;
+  private unsubscribe$ = new Subject<void>();
 
   constructor(private blogService: BlogService,
     private commentService: CommentService,
@@ -36,7 +39,6 @@ export class BlogCardComponent implements OnInit {
       currentPage: 1,
       itemsPerPage: val ? +val : this.pageSizeOptions[0]
     };
-
   }
 
   ngOnInit() {
@@ -49,9 +51,11 @@ export class BlogCardComponent implements OnInit {
   }
 
   getBlogPosts() {
-    this.blogService.getAllPosts().subscribe(result => {
-      this.blogPost = result;
-    });
+    this.blogService.getAllPosts()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(result => {
+        this.blogPost = result;
+      });
   }
 
   delete(postId) {
@@ -63,5 +67,10 @@ export class BlogCardComponent implements OnInit {
         }
       );
     }
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

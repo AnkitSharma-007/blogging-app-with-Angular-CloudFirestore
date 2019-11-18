@@ -1,10 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { AppUser } from 'src/app/models/appuser';
 import { Comments } from 'src/app/models/comment';
 import { CommentService } from 'src/app/services/comment.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-comments',
@@ -12,7 +14,7 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
   styleUrls: ['./comments.component.scss'],
   providers: [DatePipe]
 })
-export class CommentsComponent implements OnInit {
+export class CommentsComponent implements OnInit, OnDestroy {
 
   @Input()
   blogId;
@@ -20,12 +22,12 @@ export class CommentsComponent implements OnInit {
   appUser: AppUser;
   public comments = new Comments();
   commentList: Comments[] = [];
+  private unsubscribe$ = new Subject<void>();
 
   constructor(private datePipe: DatePipe,
     private commentService: CommentService,
     private authService: AuthService,
     private snackBarService: SnackbarService) {
-
     authService.appUser$.subscribe(appUser => this.appUser = appUser);
   }
 
@@ -42,9 +44,11 @@ export class CommentsComponent implements OnInit {
   }
 
   getAllComments() {
-    this.commentService.getAllCommentsForBlog(this.blogId).subscribe(result => {
-      this.commentList = result;
-    });
+    this.commentService.getAllCommentsForBlog(this.blogId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(result => {
+        this.commentList = result;
+      });
   }
 
   deleteComment(commentId) {
@@ -61,4 +65,8 @@ export class CommentsComponent implements OnInit {
     this.authService.login();
   }
 
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 }
