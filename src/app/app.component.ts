@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
-import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -9,14 +8,19 @@ import { UserService } from './services/user.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private authService: AuthService,
-    private router: Router,
-    private userService: UserService) {
-    this.authService.user$.subscribe(user => {
+
+  constructor(
+    private authService: AuthService,
+    private router: Router) {
+
+    this.authService.appUser$.subscribe(user => {
       if (!user) {
         return;
       } else {
-        this.userService.save(user);
+        /*
+         * If the user is logged in fetch the return URL from local storage.
+         * Navigate to the return URL if available.
+         */
         const returnUrl = localStorage.getItem('returnUrl');
         if (!returnUrl) {
           return;

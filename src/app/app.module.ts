@@ -23,12 +23,12 @@ import { BlogEditorComponent } from './components/blog-editor/blog-editor.compon
 import { BlogCardComponent } from './components/blog-card/blog-card.component';
 import { Excerpt } from './customPipes/excerpt';
 import { Slug } from './customPipes/slug';
-import { AuthGuardService } from './services/auth-guard.service';
-import { AdminAuthGuardService } from './services/admin-auth-guard.service';
 import { SocialShareComponent } from './components/social-share/social-share.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PaginatorComponent } from './components/paginator/paginator.component';
 import { AuthorProfileComponent } from './components/author-profile/author-profile.component';
+import { AuthGuard } from './guards/auth.guard';
+import { AdminAuthGuard } from './guards/admin-auth.guard';
 
 const customConfig: ShareButtonsConfig = {
   include: ['facebook', 'twitter', 'linkedin', 'pinterest', 'reddit', 'whatsapp', 'print', 'email'],
@@ -69,12 +69,11 @@ const customConfig: ShareButtonsConfig = {
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'page/:pagenum', component: HomeComponent },
-      { path: 'addpost', component: BlogEditorComponent, canActivate: [AuthGuardService, AdminAuthGuardService] },
-      { path: 'editpost/:id', component: BlogEditorComponent, canActivate: [AuthGuardService, AdminAuthGuardService] },
+      { path: 'addpost', component: BlogEditorComponent, canActivate: [AuthGuard] },
+      { path: 'editpost/:id', component: BlogEditorComponent, canActivate: [AdminAuthGuard] },
       { path: 'blog/:id/:slug', component: BlogComponent },
       { path: '**', component: HomeComponent }
-    ],
-      { onSameUrlNavigation: 'reload' }),
+    ]),
   ],
   providers: [],
   bootstrap: [AppComponent]

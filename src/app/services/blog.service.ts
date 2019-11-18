@@ -16,8 +16,8 @@ export class BlogService {
     return this.db.collection('blogs').add(postData);
   }
 
-  getAllPosts(): Observable<any> {
-    const books = this.db.collection('blogs', ref => ref.orderBy('createdDate', 'desc')).snapshotChanges().pipe(
+  getAllPosts(): Observable<Post[]> {
+    const blogs = this.db.collection<Post>('blogs', ref => ref.orderBy('createdDate', 'desc')).snapshotChanges().pipe(
       map(actions => {
         return actions.map(
           c => ({
@@ -25,11 +25,11 @@ export class BlogService {
             ...c.payload.doc.data()
           }));
       }));
-    return books;
+    return blogs;
   }
 
-  getPostbyId(id: string) {
-    const userDetails = this.db.doc('blogs/' + id).valueChanges();
+  getPostbyId(id: string): Observable<Post> {
+    const userDetails = this.db.doc<Post>('blogs/' + id).valueChanges();
     return userDetails;
   }
 

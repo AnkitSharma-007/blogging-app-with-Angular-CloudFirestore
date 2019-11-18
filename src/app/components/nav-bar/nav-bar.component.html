@@ -1,6 +1,6 @@
 <mat-toolbar class="nav-bar mat-elevation-z2">
   <button mat-button [routerLink]='["/"]'> My blog </button>
-  <ng-container *ngIf="appUser?.isAdmin">
+  <ng-container *ngIf="appUser">
     <button mat-button [routerLinkActive]='["link-active"]' [routerLink]='["/addpost"]'>
       Add Post
     </button>

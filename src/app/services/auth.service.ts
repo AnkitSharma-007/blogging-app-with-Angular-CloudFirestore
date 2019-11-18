@@ -4,58 +4,59 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as firebase from 'firebase/app';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { UserService } from './user.service';
 import { AppUser } from '../models/appuser';
-import 'firebase/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  user$: Observable<firebase.User>;
+  appUser$: Observable<AppUser>;
 
-  constructor(public afAuth: AngularFireAuth,
+  constructor(
+    public afAuth: AngularFireAuth,
     private route: ActivatedRoute,
     private router: Router,
-    private userService: UserService) {
+    private db: AngularFirestore) {
 
-    this.user$ = afAuth.authState;
-
-    this.user$.subscribe(
-      (user) => {
+    // Get the auth state, then fetch the Firestore user document or return null
+    this.appUser$ = this.afAuth.authState.pipe(
+      switchMap(user => {
+        // If the user is logged in, return the user details.
         if (user) {
-          return this.userService.get(user.uid).valueChanges();
+          return this.db.doc<AppUser>(`appusers/${user.uid}`).valueChanges();
         } else {
+          // If the user is NOT logged in, return null.
           return of(null);
         }
-      }
+      })
     );
   }
 
-  login() {
-
+  async login() {
+    // Store the return URL in localstorage, to be used once the user logs in successfully
     const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || this.router.url;
     localStorage.setItem('returnUrl', returnUrl);
 
-    this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    const credential = await this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    return this.updateUserData(credential.user);
   }
 
-  logout() {
+  async logout() {
     this.afAuth.auth.signOut().then(() => {
       this.router.navigate(['/']);
     });
   }
 
-  get appUser$(): Observable<AppUser> {
-    return this.user$.pipe(switchMap(
-      user => {
-        if (user) {
-          return this.userService.get(user.uid).valueChanges();
-        } else {
-          return of(null);
-        }
-      }
-    ));
+  // Save the user data to firestore on login
+  private updateUserData(user) {
+    const userRef = this.db.doc(`appusers/${user.uid}`);
+    const data = {
+      name: user.displayName,
+      email: user.email,
+      photoURL: user.photoURL
+    };
+    return userRef.set(data, { merge: true });
   }
 }
