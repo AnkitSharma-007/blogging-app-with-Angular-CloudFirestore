@@ -1,19 +1,24 @@
 .nav-bar {
-    background-color: #1565C0;
-    color: #FFFFFF;
-    position: fixed;
-    top: 0;
-    z-index: 99;
-  }
-  
-  button:focus {
-    outline: none;
-    border: 0;
-  }
+  background-color: #1565C0;
+  color: #FFFFFF;
+  position: fixed;
+  top: 0;
+  z-index: 99;
+}
 
-  .user-avatar {
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
+button:focus {
+  outline: none;
+  border: 0;
+}
+
+.user-avatar {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+a{
+  text-decoration: none;
+  color: #FFFFFF;
+}
