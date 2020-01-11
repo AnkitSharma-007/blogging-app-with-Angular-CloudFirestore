@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { Post } from 'src/app/models/Post';
-import { AppUser } from 'src/app/models/appuser';
+import { Post } from 'src/app/models/post';
+import { DatePipe } from '@angular/common';
 import { BlogService } from 'src/app/services/blog.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AppUser } from 'src/app/models/appuser';
 import { AuthService } from 'src/app/services/auth.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -19,10 +19,10 @@ export class BlogEditorComponent implements OnInit, OnDestroy {
 
   public Editor = ClassicEditor;
   ckeConfig: any;
-  public postData = new Post();
-  appUser: AppUser;
+  postData = new Post();
   formTitle = 'Add';
   postId;
+  appUser: AppUser;
   private unsubscribe$ = new Subject<void>();
 
   constructor(private _route: ActivatedRoute,

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
   templateUrl: './paginator.component.html',
   styleUrls: ['./paginator.component.scss']
 })
-export class PaginatorComponent implements OnInit {
+export class PaginatorComponent {
 
   @Input()
   pageSizeOptions: [];
@@ -15,9 +15,6 @@ export class PaginatorComponent implements OnInit {
   config: any;
 
   constructor(private router: Router) { }
-
-  ngOnInit() {
-  }
 
   pageChange(newPage: number) {
     this.router.navigate(['/page/', newPage]);

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Post } from 'src/app/models/post';
 import { ActivatedRoute } from '@angular/router';
-import { Post } from 'src/app/models/Post';
 import { BlogService } from 'src/app/services/blog.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

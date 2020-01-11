@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Post } from 'src/app/models/Post';
-import { AppUser } from 'src/app/models/appuser';
 import { BlogService } from 'src/app/services/blog.service';
-import { CommentService } from 'src/app/services/comment.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { Post } from 'src/app/models/post';
 import { ActivatedRoute } from '@angular/router';
+import { AppUser } from 'src/app/models/appuser';
+import { AuthService } from 'src/app/services/auth.service';
+import { CommentService } from 'src/app/services/comment.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -33,11 +33,11 @@ export class BlogCardComponent implements OnInit, OnDestroy {
 
     this.pageSizeOptions = [2, 4, 6];
 
-    const val = sessionStorage.getItem('pageSize');
+    const pageSize = sessionStorage.getItem('pageSize');
 
     this.config = {
       currentPage: 1,
-      itemsPerPage: val ? +val : this.pageSizeOptions[0]
+      itemsPerPage: pageSize ? +pageSize : this.pageSizeOptions[0]
     };
   }
 

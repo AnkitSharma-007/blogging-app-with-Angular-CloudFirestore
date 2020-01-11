@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { iconpack } from 'src/icons';
 
 @Component({
   selector: 'app-social-share',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SocialShareComponent implements OnInit {
 
-  constructor() { }
+  constructor(library: FaIconLibrary) {
+    library.addIcons(...iconpack);
+  }
 
   ngOnInit() {
   }
