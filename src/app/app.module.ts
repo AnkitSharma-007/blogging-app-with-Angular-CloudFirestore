@@ -7,12 +7,11 @@ import { FormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { ShareButtonsModule } from '@ngx-share/buttons';
-import { ShareButtonsConfig } from '@ngx-share/core';
+import { ShareButtonsConfig, ShareModule } from '@ngx-share/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HttpClientModule } from '@angular/common/http';
 import { NgMaterialModule } from './ng-material/ng-material.module';
 import { NgxPaginationModule } from 'ngx-pagination';
-
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { BlogComponent } from './components/blog/blog.component';
@@ -31,8 +30,6 @@ import { AuthGuard } from './guards/auth.guard';
 import { AdminAuthGuard } from './guards/admin-auth.guard';
 
 const customConfig: ShareButtonsConfig = {
-  include: ['facebook', 'twitter', 'linkedin', 'reddit', 'whatsapp', 'telegram', 'print', 'email'],
-  theme: 'circles-dark',
   autoSetMeta: true,
   twitterAccount: 'ankitsharma_007'
 };
@@ -56,7 +53,8 @@ const customConfig: ShareButtonsConfig = {
   imports: [
     NgxPaginationModule,
     HttpClientModule,
-    ShareButtonsModule.withConfig(customConfig),
+    FontAwesomeModule,
+    ShareModule.withConfig(customConfig),
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
