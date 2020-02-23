@@ -32,9 +32,7 @@ export class BlogCardComponent implements OnInit, OnDestroy {
     this.authService.appUser$.subscribe(appUser => this.appUser = appUser);
 
     this.pageSizeOptions = [2, 4, 6];
-
     const pageSize = sessionStorage.getItem('pageSize');
-
     this.config = {
       currentPage: 1,
       itemsPerPage: pageSize ? +pageSize : this.pageSizeOptions[0]
@@ -58,7 +56,7 @@ export class BlogCardComponent implements OnInit, OnDestroy {
       });
   }
 
-  delete(postId) {
+  delete(postId: string) {
     if (confirm('Are you sure')) {
       this.blogService.deletePost(postId).then(
         () => {

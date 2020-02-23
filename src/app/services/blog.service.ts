@@ -29,8 +29,8 @@ export class BlogService {
   }
 
   getPostbyId(id: string): Observable<Post> {
-    const userDetails = this.db.doc<Post>('blogs/' + id).valueChanges();
-    return userDetails;
+    const blogDetails = this.db.doc<Post>('blogs/' + id).valueChanges();
+    return blogDetails;
   }
 
   updatePost(postId: string, post: Post) {
