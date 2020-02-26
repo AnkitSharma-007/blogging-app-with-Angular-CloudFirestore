@@ -16,10 +16,10 @@ export class BlogComponent implements OnInit, OnDestroy {
   postId;
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private _route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
     private blogService: BlogService) {
-    if (this._route.snapshot.params['id']) {
-      this.postId = this._route.snapshot.paramMap.get('id');
+    if (this.route.snapshot.params['id']) {
+      this.postId = this.route.snapshot.paramMap.get('id');
     }
   }
 

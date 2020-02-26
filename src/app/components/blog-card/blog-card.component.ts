@@ -28,9 +28,6 @@ export class BlogCardComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private route: ActivatedRoute,
     private snackBarService: SnackbarService) {
-
-    this.authService.appUser$.subscribe(appUser => this.appUser = appUser);
-
     this.pageSizeOptions = [2, 4, 6];
     const pageSize = sessionStorage.getItem('pageSize');
     this.config = {
@@ -40,6 +37,9 @@ export class BlogCardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
+    this.authService.appUser$.subscribe(appUser => this.appUser = appUser);
+
     this.route.params.subscribe(
       params => {
         this.config.currentPage = +params['pagenum'];

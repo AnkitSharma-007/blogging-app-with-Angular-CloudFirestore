@@ -25,18 +25,18 @@ export class BlogEditorComponent implements OnInit, OnDestroy {
   appUser: AppUser;
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private _route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
     private datePipe: DatePipe,
     private blogService: BlogService,
-    private _router: Router,
+    private router: Router,
     private authService: AuthService) {
-    if (this._route.snapshot.params['id']) {
-      this.postId = this._route.snapshot.paramMap.get('id');
+    if (this.route.snapshot.params['id']) {
+      this.postId = this.route.snapshot.paramMap.get('id');
     }
-    this.authService.appUser$.subscribe(appUser => this.appUser = appUser);
   }
 
   ngOnInit() {
+    this.authService.appUser$.subscribe(appUser => this.appUser = appUser);
     this.setEditorConfig();
     if (this.postId) {
       this.formTitle = 'Edit';
@@ -58,7 +58,7 @@ export class BlogEditorComponent implements OnInit, OnDestroy {
     if (this.postId) {
       this.blogService.updatePost(this.postId, this.postData).then(
         () => {
-          this._router.navigate(['/']);
+          this.router.navigate(['/']);
         }
       );
     } else {
@@ -66,7 +66,7 @@ export class BlogEditorComponent implements OnInit, OnDestroy {
       this.postData.author = this.appUser.name;
       this.blogService.createPost(this.postData).then(
         () => {
-          this._router.navigate(['/']);
+          this.router.navigate(['/']);
         }
       );
     }
@@ -91,7 +91,7 @@ export class BlogEditorComponent implements OnInit, OnDestroy {
   }
 
   cancel() {
-    this._router.navigate(['/']);
+    this.router.navigate(['/']);
   }
 
   ngOnDestroy() {
