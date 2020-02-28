@@ -30,7 +30,6 @@ import { AuthGuard } from './guards/auth.guard';
 import { AdminAuthGuard } from './guards/admin-auth.guard';
 
 const customConfig: ShareButtonsConfig = {
-  autoSetMeta: true,
   twitterAccount: 'ankitsharma_007'
 };
 

@@ -27,11 +27,10 @@ export class CommentsComponent implements OnInit, OnDestroy {
   constructor(private datePipe: DatePipe,
     private commentService: CommentService,
     private authService: AuthService,
-    private snackBarService: SnackbarService) {
-    authService.appUser$.subscribe(appUser => this.appUser = appUser);
-  }
+    private snackBarService: SnackbarService) { }
 
   ngOnInit() {
+    this.authService.appUser$.subscribe(appUser => this.appUser = appUser);
     this.getAllComments();
   }
 
