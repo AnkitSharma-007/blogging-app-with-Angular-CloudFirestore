@@ -21,8 +21,8 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { ScrollerComponent } from './components/scroller/scroller.component';
 import { BlogEditorComponent } from './components/blog-editor/blog-editor.component';
 import { BlogCardComponent } from './components/blog-card/blog-card.component';
-import { Excerpt } from './customPipes/excerpt';
-import { Slug } from './customPipes/slug';
+import { ExcerptPipe } from './customPipes/excerpt.pipe';
+import { SlugPipe } from './customPipes/slug.pipe';
 import { SocialShareComponent } from './components/social-share/social-share.component';
 import { PaginatorComponent } from './components/paginator/paginator.component';
 import { AuthorProfileComponent } from './components/author-profile/author-profile.component';
@@ -43,11 +43,11 @@ const customConfig: ShareButtonsConfig = {
     ScrollerComponent,
     BlogEditorComponent,
     BlogCardComponent,
-    Excerpt,
-    Slug,
+    ExcerptPipe,
+    SlugPipe,
     SocialShareComponent,
     PaginatorComponent,
-    AuthorProfileComponent
+    AuthorProfileComponent,
   ],
   imports: [
     NgxPaginationModule,
@@ -55,7 +55,7 @@ const customConfig: ShareButtonsConfig = {
     FontAwesomeModule,
     ShareModule.withConfig(customConfig),
     AngularFireAuthModule,
-    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     BrowserModule,
     BrowserAnimationsModule,
