@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  firebase: {
+  firebaseConfig: {
     apiKey: 'dummy',
     authDomain: 'ngblogsite.firebaseapp.com',
     databaseURL: 'https://ngblogsite.firebaseio.com',
