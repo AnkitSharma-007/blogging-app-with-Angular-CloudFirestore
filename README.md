@@ -19,6 +19,10 @@ A blogging application created with the help of Angular on front-end and Google 
 
 https://blogsite-30c69.firebaseapp.com/
 
+# Free eBook
+
+I have published a free eBook which explains how to create this app from scratch. Download the book from [Build a Full-Stack Web Application Using Angular & Firebase](https://www.c-sharpcorner.com/ebooks/build-a-full-stack-web-application-using-angular-and-firebase).
+
 # See Also
 
 https://github.com/AnkitSharma-007/blogsite
