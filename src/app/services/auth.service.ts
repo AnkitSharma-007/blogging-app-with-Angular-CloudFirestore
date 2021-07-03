@@ -39,12 +39,12 @@ export class AuthService {
     const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || this.router.url;
     localStorage.setItem('returnUrl', returnUrl);
 
-    const credential = await this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    const credential = await this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
     return this.updateUserData(credential.user);
   }
 
   async logout() {
-    this.afAuth.auth.signOut().then(() => {
+    this.afAuth.signOut().then(() => {
       this.router.navigate(['/']);
     });
   }
