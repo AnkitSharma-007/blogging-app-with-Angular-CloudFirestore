@@ -22,7 +22,7 @@ export class CommentService {
         map(actions => {
           return actions.map(
             c => ({
-              commentId: c.payload.doc.id,
+              commentId: c.payload.doc['id'],
               ...c.payload.doc.data()
             }));
         }));
@@ -35,7 +35,7 @@ export class CommentService {
     commentsToDelete.forEach(
       commentList => {
         commentList.forEach(comment => {
-          this.db.doc('comments/' + comment.payload.doc.id).delete();
+          this.db.doc('comments/' + comment.payload.doc['id']).delete();
         });
       }
     );

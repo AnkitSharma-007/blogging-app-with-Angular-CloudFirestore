@@ -21,7 +21,7 @@ export class BlogService {
       map(actions => {
         return actions.map(
           c => ({
-            postId: c.payload.doc.id,
+            postId: c.payload.doc['id'],
             ...c.payload.doc.data()
           }));
       }));
