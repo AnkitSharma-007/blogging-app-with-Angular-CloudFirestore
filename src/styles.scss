@@ -2,7 +2,6 @@
 
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
 @import "~bootstrap/dist/css/bootstrap.css";
-@import '~@ngx-share/button/themes/circles/circles-dark-theme';
 
 body {
   background-color: #fafafa;
@@ -43,11 +42,11 @@ blockquote {
   flex: 1 1 auto;
 }
 
-img{
+img {
   max-width: 100%;
 }
 
 .snackbar-ribon {
-  color: #FFFFFF;
+  color: #ffffff;
   background: #17a2b8;
 }
