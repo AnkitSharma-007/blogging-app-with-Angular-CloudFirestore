@@ -78,7 +78,7 @@ export class BlogEditorComponent implements OnInit, OnDestroy {
 
   setEditorConfig() {
     this.ckeConfig = {
-      removePlugins: ["ImageUpload", "MediaEmbed"],
+      removePlugins: ["ImageUpload", "MediaEmbed", "EasyImage"],
       heading: {
         options: [
           {
