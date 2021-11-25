@@ -1,15 +1,25 @@
-<div class="docs-example-viewer-wrapper">
-  <h1 class="entry-title">{{postData.title}}</h1>
-  <mat-card-subtitle class="blog-info">
-    <i class="fa fa-calendar" aria-hidden="true"></i> {{postData.createdDate | date:'longDate'}}
-    <i class="fa fa-user" aria-hidden="true"></i> {{postData.author}}
-  </mat-card-subtitle>
-  <mat-divider></mat-divider>
-  <div class="docs-example-viewer-body">
-    <div [innerHTML]="postData.content">
-    </div>
+<ng-container *ngIf="postData$ | async as postData; else loader">
+  <mat-card class="mt-3 p-4 mat-elevation-z2 bg-white">
+    <mat-card-title>
+      <h1 class="my-2 display-4">{{ postData?.title }}</h1></mat-card-title
+    >
+    <mat-card-subtitle class="my-4">
+      <i class="fas fa-calendar" aria-hidden="true"></i>
+      {{ postData?.createdDate | date: "longDate" }}
+      <i class="fas fa-user ml-2" aria-hidden="true"></i>
+      {{ postData?.author | titlecase }}
+    </mat-card-subtitle>
+    <mat-divider></mat-divider>
+    <mat-card-content class="py-3 align-items-center align-content-center">
+      <div [innerHTML]="postData?.content"></div>
+    </mat-card-content>
+  </mat-card>
+</ng-container>
+<ng-template #loader>
+  <div class="d-flex justify-content-center">
+    <mat-spinner></mat-spinner>
   </div>
-</div>
+</ng-template>
 <app-social-share></app-social-share>
 <mat-divider></mat-divider>
 <app-comments [blogId]="postId"></app-comments>

@@ -6,9 +6,6 @@ import { environment } from "../environments/environment";
 import { RouterModule } from "@angular/router";
 import { CKEditorModule } from "@ckeditor/ckeditor5-angular";
 import { FormsModule } from "@angular/forms";
-import { AngularFireModule } from "@angular/fire";
-import { AngularFirestoreModule } from "@angular/fire/firestore";
-import { AngularFireAuthModule } from "@angular/fire/auth";
 import { HttpClientModule } from "@angular/common/http";
 import { NgMaterialModule } from "./ng-material/ng-material.module";
 import { NgxPaginationModule } from "ngx-pagination";
@@ -29,6 +26,8 @@ import { AdminAuthGuard } from "./guards/admin-auth.guard";
 import { ShareIconsModule } from "ngx-sharebuttons/icons";
 import { ShareButtonsConfig, ShareModule } from "ngx-sharebuttons";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
+import { AngularFireModule } from "@angular/fire/compat";
 
 const customConfig: ShareButtonsConfig = {
   autoSetMeta: true,
@@ -52,14 +51,13 @@ const customConfig: ShareButtonsConfig = {
     AuthorProfileComponent,
   ],
   imports: [
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
     ShareIconsModule,
     NgxPaginationModule,
     HttpClientModule,
     FontAwesomeModule,
     ShareModule.withConfig(customConfig),
-    AngularFireAuthModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule,
     BrowserModule,
     BrowserAnimationsModule,
     NgMaterialModule,

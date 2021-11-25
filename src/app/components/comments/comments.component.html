@@ -1,56 +1,102 @@
 <ng-template #anonymousUser>
-  <mat-card class="comment-card mat-elevation-z2">
+  <mat-card class="my-3 mat-elevation-z2">
     <a (click)="login()">Login with Google</a> to post comments
   </mat-card>
 </ng-template>
-<mat-card *ngIf="appUser; else anonymousUser" class="comment-card mat-elevation-z2">
-  <mat-card-title>
-    LEAVE A REPLY
-  </mat-card-title>
+<mat-card *ngIf="appUser; else anonymousUser" class="my-2 mat-elevation-z2">
+  <mat-card-title> LEAVE A REPLY </mat-card-title>
   <mat-card-subtitle>
     Your email address will not be published. Required fields are marked *
   </mat-card-subtitle>
   <mat-card-content>
-    <form #commentForm="ngForm" (ngSubmit)="commentForm.form.valid && onCommentPost(commentForm)" novalidate>
+    <form
+      #commentForm="ngForm"
+      (ngSubmit)="commentForm.form.valid && onCommentPost(commentForm)"
+      novalidate
+    >
       <mat-form-field class="full-width">
-        <input matInput placeholder="Name" name="commentedBy" [(ngModel)]="comments.commentedBy" #commentedBy="ngModel"
-          required>
-        <mat-error *ngIf="commentForm.submitted && commentedBy.errors?.required">Name is required</mat-error>
+        <input
+          matInput
+          placeholder="Name"
+          name="commentedBy"
+          [(ngModel)]="comments.commentedBy"
+          #commentedBy="ngModel"
+          required
+        />
+        <mat-error *ngIf="commentForm.submitted && commentedBy.errors?.required"
+          >Name is required</mat-error
+        >
       </mat-form-field>
       <mat-form-field class="full-width">
-        <input matInput placeholder="Email" name="email" [(ngModel)]="comments.email" #email="ngModel" email required>
-        <mat-error *ngIf="commentForm.submitted && email.errors?.required">Email is required</mat-error>
-        <mat-error *ngIf="commentForm.submitted && email.errors?.email">Invalid email</mat-error>
+        <input
+          matInput
+          placeholder="Email"
+          name="email"
+          [(ngModel)]="comments.email"
+          #email="ngModel"
+          email
+          required
+        />
+        <mat-error *ngIf="commentForm.submitted && email.errors?.required"
+          >Email is required</mat-error
+        >
+        <mat-error *ngIf="commentForm.submitted && email.errors?.email"
+          >Invalid email</mat-error
+        >
       </mat-form-field>
       <mat-form-field class="full-width">
-        <textarea matInput placeholder="Comment" name="content" [(ngModel)]="comments.content" #content="ngModel"
-          required></textarea>
-        <mat-error *ngIf="commentForm.submitted && content.errors?.required">Comment is required</mat-error>
+        <textarea
+          matInput
+          placeholder="Comment"
+          name="content"
+          [(ngModel)]="comments.content"
+          #content="ngModel"
+          required
+        ></textarea>
+        <mat-error *ngIf="commentForm.submitted && content.errors?.required"
+          >Comment is required</mat-error
+        >
       </mat-form-field>
       <mat-card-actions>
-        <button type="
-            submit" mat-raised-button color="primary">Post Comment</button>
+        <button
+          type="
+            submit"
+          mat-raised-button
+          color="primary"
+        >
+          Post Comment
+        </button>
       </mat-card-actions>
     </form>
   </mat-card-content>
 </mat-card>
-<mat-card *ngFor="let comment of commentList" class="comment-card mat-elevation-z2">
+<mat-card
+  *ngFor="let comment of commentList$ | async"
+  class="my-3 mat-elevation-z2"
+>
   <mat-card-title>
-    <div class="comment-card-title">
+    <div class="d-flex justify-content-between">
       <div>
-        {{comment.commentedBy}}
+        {{ comment?.commentedBy }}
       </div>
       <div *ngIf="appUser?.isAdmin">
-        <button mat-icon-button matTooltip="Delete comment" matTooltipPosition="before" color="accent"
-          (click)="deleteComment(comment.commentId)">
+        <button
+          mat-icon-button
+          matTooltip="Delete comment"
+          matTooltipPosition="before"
+          color="accent"
+          (click)="deleteComment(comment?.commentId)"
+        >
           <mat-icon>delete</mat-icon>
         </button>
       </div>
     </div>
   </mat-card-title>
 
-  <mat-card-subtitle>{{comment.commentDate | date:'medium'}}</mat-card-subtitle>
+  <mat-card-subtitle>{{
+    comment?.commentDate | date: "medium"
+  }}</mat-card-subtitle>
   <mat-card-content>
-    <p>{{comment.content}}</p>
+    <p>{{ comment?.content }}</p>
   </mat-card-content>
 </mat-card>

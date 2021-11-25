@@ -1,31 +1,59 @@
-<ng-template #emptyblog>
-  <div class="spinner-container">
+<ng-template #loading>
+  <div class="d-flex justify-content-center">
     <mat-spinner></mat-spinner>
   </div>
 </ng-template>
-<ng-container *ngIf="blogPost && blogPost.length>0; else emptyblog">
-  <div *ngFor="let post of blogPost | paginate: config">
-    <mat-card class="blog-card mat-elevation-z2">
-      <mat-card-content>
-        <a class="blog-title" [routerLink]="['/blog/', post.postId, post.title | slug]">
-          <h2>{{ post.title}} </h2>
-        </a>
-      </mat-card-content>
-      <mat-card-content>
-        <div [innerHTML]="post.content | excerpt"></div>
-      </mat-card-content>
-      <mat-divider></mat-divider>
-      <mat-card-actions align="end">
-        <ng-container *ngIf="appUser?.isAdmin">
-          <button mat-raised-button color="accent" [routerLink]="['/editpost',post.postId]">Edit</button>
-          <button mat-raised-button color="warn" (click)="delete(post.postId)">Delete</button>
-        </ng-container>
-        <span class="spacer"></span>
-        <button mat-raised-button color="primary" [routerLink]="['/blog/', post.postId, post.title | slug]">Read
-          More</button>
-      </mat-card-actions>
-    </mat-card>
-  </div>
-  <mat-divider></mat-divider>
-  <app-paginator [pageSizeOptions]="pageSizeOptions" [config]="config"></app-paginator>
+<ng-container *ngIf="blogPost$ | async as blogPost; else loading">
+  <ng-container *ngIf="blogPost?.length > 0; else noData">
+    <div *ngFor="let post of blogPost | paginate: config">
+      <mat-card class="mat-elevation-z2 mb-3">
+        <mat-card-content>
+          <a
+            class="blog-title"
+            [routerLink]="['/blog/', post.postId, post.title | slug]"
+          >
+            <h2>{{ post.title }}</h2>
+          </a>
+        </mat-card-content>
+        <mat-card-content>
+          <div [innerHTML]="post.content | excerpt"></div>
+        </mat-card-content>
+        <mat-divider></mat-divider>
+        <mat-card-actions align="end">
+          <ng-container *ngIf="(appUser$ | async)?.isAdmin">
+            <button
+              mat-raised-button
+              color="accent"
+              [routerLink]="['/editpost', post.postId]"
+            >
+              Edit
+            </button>
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="delete(post.postId)"
+            >
+              Delete
+            </button>
+          </ng-container>
+          <span class="spacer"></span>
+          <button
+            mat-raised-button
+            color="primary"
+            [routerLink]="['/blog/', post.postId, post.title | slug]"
+          >
+            Read More
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <mat-divider></mat-divider>
+    <app-paginator
+      [pageSizeOptions]="pageSizeOptions"
+      [config]="config"
+    ></app-paginator>
+  </ng-container>
+  <ng-template #noData>
+    <h3>No data found</h3>
+  </ng-template>
 </ng-container>
