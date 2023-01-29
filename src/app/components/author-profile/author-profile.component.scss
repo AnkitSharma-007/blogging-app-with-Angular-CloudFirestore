@@ -1,27 +1,30 @@
-.fa-twitter-square {
+.twitter-icon {
   color: #55acee;
 }
 
-.fa-facebook-square {
+.facebook-icon {
   color: #3b5998;
 }
 
-.fa-linkedin-square {
+.linkedin-icon {
   color: #0976b4;
 }
 
-.fa-github-square {
+.github-icon {
   color: #333;
 }
 
-.fab {
-  font-size: 3em;
-  margin: 0 5px;
+fa-icon {
+  font-size: 2em;
 }
 
-.mat-card-avatar {
+.author-image {
   width: 100px;
   height: 100px;
+  border-radius: 50%;
   margin: auto;
-  padding: 5px;
+}
+
+a {
+  text-decoration: none;
 }

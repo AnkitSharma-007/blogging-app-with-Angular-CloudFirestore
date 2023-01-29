@@ -1,43 +1,46 @@
-<h1 class="mt-2">{{ formTitle }} Post</h1>
+<h1 class="mt-2 display-4">{{ formTitle }} Post</h1>
 <hr />
-<mat-card class="mat-elevation-z2 mt-3">
-  <form
-    #myForm="ngForm"
-    (ngSubmit)="myForm.form.valid && saveBlogPost()"
-    accept-charset="UTF-8"
-    novalidate
-  >
-    <input
-      type="text"
-      class="blogHeader"
-      placeholder="Add title..."
-      class="form-control"
-      name="postTitle"
-      [(ngModel)]="postData.title"
-      #postTitle="ngModel"
-      required
-    />
-    <span
-      class="text-danger"
-      *ngIf="myForm.submitted && postTitle.errors?.required"
+<mat-card class="mat-elevation-z2 my-3">
+  <mat-card-content>
+    <form
+      #myForm="ngForm"
+      (ngSubmit)="myForm.form.valid && saveBlogPost()"
+      accept-charset="UTF-8"
+      novalidate
     >
-      Title is required
-    </span>
-    <br />
-    <div class="form-group">
-      <ckeditor
-        name="myckeditor"
-        [config]="ckeConfig"
-        [(ngModel)]="postData.content"
-        #myckeditor="ngModel"
-        debounce="300"
-        [editor]="Editor"
-      ></ckeditor>
-    </div>
-    <mat-card-actions>
-      <div fxflex></div>
-      <button type="submit" mat-raised-button color="primary">Save</button>
-      <button mat-raised-button color="warn" (click)="cancel()">CANCEL</button>
-    </mat-card-actions>
-  </form>
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Title</mat-label>
+        <input
+          matInput
+          placeholder="Add title..."
+          name="postTitle"
+          [(ngModel)]="postData.title"
+          #postTitle="ngModel"
+          required
+        />
+        <mat-error *ngIf="myForm.submitted && postTitle.errors?.required"
+          >Title is required</mat-error
+        >
+      </mat-form-field>
+
+      <div class="form-group">
+        <ckeditor
+          name="myckeditor"
+          [config]="ckeConfig"
+          [(ngModel)]="postData.content"
+          #myckeditor="ngModel"
+          debounce="300"
+          [editor]="Editor"
+        ></ckeditor>
+      </div>
+      <div class="py-3" align="end">
+        <button class="me-2" type="submit" mat-raised-button color="primary">
+          Save
+        </button>
+        <button mat-raised-button color="warn" (click)="cancel()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
 </mat-card>

@@ -1,32 +1,40 @@
-<mat-toolbar class="nav-bar mat-elevation-z2">
-  <button mat-button [routerLink]="['/']">My blog</button>
-  <ng-container *ngIf="appUser">
-    <button
-      mat-button
-      [routerLinkActive]="['link-active']"
-      [routerLink]="['/addpost']"
-    >
-      Add Post
-    </button>
-  </ng-container>
-  <span class="spacer"></span>
-  <button mat-button>
-    <a
-      href="https://github.com/AnkitSharma-007/blogging-app-with-Angular-CloudFirestore"
-      target="_blank"
-      ><i class="fab fa-github" aria-hidden="true"></i> Source Code</a
-    >
-  </button>
-  <ng-template #anonymousUser>
-    <button mat-button (click)="login()">Login with Google</button>
-  </ng-template>
-  <ng-container *ngIf="appUser; else anonymousUser">
-    <img mat-card-avatar class="user-avatar" src="{{ appUser.photoURL }}" />
-    <button mat-button [matMenuTriggerFor]="menu">
-      {{ appUser.name | titlecase }}<mat-icon>arrow_drop_down</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="logout()">Logout</button>
-    </mat-menu>
-  </ng-container>
+<mat-toolbar color="primary" class="mat-elevation-z2">
+  <mat-toolbar-row>
+    <button mat-button [routerLink]="['/']">My blog</button>
+    <ng-container *ngIf="appUser">
+      <button
+        mat-button
+        [routerLinkActive]="['link-active']"
+        [routerLink]="['/addpost']"
+      >
+        Add Post
+      </button>
+    </ng-container>
+    <span class="spacer"></span>
+    <div class="me-2">
+      <button mat-button>
+        <a
+          href="https://github.com/AnkitSharma-007/blogging-app-with-Angular-CloudFirestore"
+          target="_blank"
+          ><i class="fa fa-github"></i> Source Code</a
+        >
+      </button>
+    </div>
+    <ng-template #anonymousUser>
+      <button mat-button (click)="login()">Login with Google</button>
+    </ng-template>
+    <ng-container *ngIf="appUser; else anonymousUser">
+      <div>
+        <img mat-card-avatar class="user-avatar" src="{{ appUser.photoURL }}" />
+      </div>
+
+      <button mat-button [matMenuTriggerFor]="menu">
+        {{ appUser.name | titlecase }}
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="logout()">Logout</button>
+      </mat-menu>
+    </ng-container>
+  </mat-toolbar-row>
 </mat-toolbar>

@@ -5,16 +5,16 @@
 </ng-template>
 <ng-container *ngIf="blogPost$ | async as blogPost; else loading">
   <ng-container *ngIf="blogPost?.length > 0; else noData">
-    <div *ngFor="let post of blogPost | paginate: config">
+    <div *ngFor="let post of blogPost | paginate : config">
       <mat-card class="mat-elevation-z2 mb-3">
-        <mat-card-content>
+        <mat-card-header>
           <a
             class="blog-title"
             [routerLink]="['/blog/', post.postId, post.title | slug]"
           >
             <h2>{{ post.title }}</h2>
           </a>
-        </mat-card-content>
+        </mat-card-header>
         <mat-card-content>
           <div [innerHTML]="post.content | excerpt"></div>
         </mat-card-content>
@@ -22,6 +22,7 @@
         <mat-card-actions align="end">
           <ng-container *ngIf="(appUser$ | async)?.isAdmin">
             <button
+              class="mx-2"
               mat-raised-button
               color="accent"
               [routerLink]="['/editpost', post.postId]"

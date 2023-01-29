@@ -5,6 +5,8 @@ import { BlogService } from "src/app/services/blog.service";
 import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
+import { faCalendar, faUser } from "@fortawesome/free-solid-svg-icons";
+
 @Component({
   selector: "app-blog",
   templateUrl: "./blog.component.html",
@@ -14,6 +16,9 @@ export class BlogComponent implements OnDestroy {
   postData$: Observable<Post>;
   postId;
   private unsubscribe$ = new Subject<void>();
+
+  faCalendar = faCalendar;
+  faUser = faUser;
 
   constructor(private route: ActivatedRoute, private blogService: BlogService) {
     this.route.paramMap

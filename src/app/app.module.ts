@@ -28,6 +28,7 @@ import { ShareButtonsConfig, ShareModule } from "ngx-sharebuttons";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
 import { AngularFireModule } from "@angular/fire/compat";
+import { WebsiteInfoComponent } from './components/website-info/website-info.component';
 
 const customConfig: ShareButtonsConfig = {
   autoSetMeta: true,
@@ -49,6 +50,7 @@ const customConfig: ShareButtonsConfig = {
     SocialShareComponent,
     PaginatorComponent,
     AuthorProfileComponent,
+    WebsiteInfoComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),

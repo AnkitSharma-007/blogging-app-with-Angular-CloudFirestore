@@ -1,18 +1,23 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener } from "@angular/core";
+import { faAngleUp } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
-  selector: 'app-scroller',
-  templateUrl: './scroller.component.html',
-  styleUrls: ['./scroller.component.scss']
+  selector: "app-scroller",
+  templateUrl: "./scroller.component.html",
+  styleUrls: ["./scroller.component.scss"],
 })
 export class ScrollerComponent {
-
   showScroller: boolean;
   showScrollerPosition = 100;
 
-  @HostListener('window:scroll')
+  faAngleUp = faAngleUp;
+  @HostListener("window:scroll")
   checkScroll() {
-    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    const scrollPosition =
+      window.pageYOffset ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0;
 
     if (scrollPosition >= this.showScrollerPosition) {
       this.showScroller = true;
@@ -25,7 +30,7 @@ export class ScrollerComponent {
     window.scroll({
       top: 0,
       left: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   }
 }

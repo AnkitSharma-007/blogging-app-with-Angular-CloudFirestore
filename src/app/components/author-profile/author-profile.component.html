@@ -2,8 +2,7 @@
   <mat-card-content>
     <div class="text-center">
       <img
-        class="text-center"
-        mat-card-avatar
+        class="text-center author-image m-1"
         src="../../../assets/ankit-sharma.jpg"
       />
       <h5>Ankit Sharma</h5>
@@ -12,16 +11,16 @@
   <mat-divider></mat-divider>
   <mat-card-content class="d-flex justify-content-center py-2">
     <a href="https://www.facebook.com/Ankit.Sharma.0709" target="_blank"
-      ><i class="fab fa-facebook-square"></i
-    ></a>
+      ><fa-icon class="facebook-icon mx-1" [icon]="facebooIcon"></fa-icon>
+    </a>
     <a href="https://twitter.com/ankitsharma_007" target="_blank"
-      ><i class="fab fa-twitter-square" aria-hidden="true"></i
+      ><fa-icon class="twitter-icon mx-1" [icon]="twitterIcon"></fa-icon
     ></a>
     <a href="https://www.linkedin.com/in/ankitsharma-007/" target="_blank"
-      ><i class="fab fa-linkedin" aria-hidden="true"></i
+      ><fa-icon class="linkedin-icon mx-1" [icon]="linkedinIcon"></fa-icon
     ></a>
     <a href="https://github.com/AnkitSharma-007" target="_blank"
-      ><i class="fab fa-github-square" aria-hidden="true"></i
+      ><fa-icon class="github-icon mx-1" [icon]="githubIcon"></fa-icon
     ></a>
   </mat-card-content>
 </mat-card>
