@@ -8,7 +8,7 @@ import { Observable } from "rxjs";
   providedIn: "root",
 })
 export class BlogService {
-  constructor(private db: AngularFirestore) {}
+  constructor(private readonly db: AngularFirestore) {}
 
   createPost(post: Post) {
     const postData = JSON.parse(JSON.stringify(post));

@@ -1,31 +1,55 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { BlogService } from "src/app/services/blog.service";
 import { Post } from "src/app/models/post";
-import { ActivatedRoute, ParamMap } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { AuthService } from "src/app/services/auth.service";
 import { CommentService } from "src/app/services/comment.service";
 import { SnackbarService } from "src/app/services/snackbar.service";
-import { Observable, Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { combineLatestWith, map } from "rxjs/operators";
+import { AppUser } from "src/app/models/appuser";
+
+class Vm {
+  blogList: Post[];
+  appUser: AppUser;
+
+  constructor() {
+    this.blogList = [];
+    this.appUser = new AppUser();
+  }
+}
 
 @Component({
   selector: "app-blog-card",
   templateUrl: "./blog-card.component.html",
   styleUrls: ["./blog-card.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BlogCardComponent implements OnInit, OnDestroy {
+export class BlogCardComponent {
   config: any;
   pageSizeOptions = [];
-  blogPost$: Observable<Post[]>;
-  appUser$ = this.authService.appUser$;
-  private unsubscribe$ = new Subject<void>();
+
+  vm$ = this.activatedRoute.paramMap.pipe(
+    combineLatestWith(
+      this.blogService.getAllPosts(),
+      this.authService.appUser$
+    ),
+    map(([params, blogs, appUser]) => {
+      let blogVm = new Vm();
+
+      this.config.currentPage = Number(params.get("pagenum"));
+      blogVm.blogList = blogs;
+      blogVm.appUser = appUser;
+
+      return blogVm;
+    })
+  );
 
   constructor(
-    private blogService: BlogService,
-    private commentService: CommentService,
-    private authService: AuthService,
-    private route: ActivatedRoute,
-    private snackBarService: SnackbarService
+    private readonly blogService: BlogService,
+    private readonly commentService: CommentService,
+    private readonly authService: AuthService,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly snackBarService: SnackbarService
   ) {
     this.pageSizeOptions = [2, 4, 6];
     const pageSize = sessionStorage.getItem("pageSize");
@@ -35,15 +59,6 @@ export class BlogCardComponent implements OnInit, OnDestroy {
     };
   }
 
-  ngOnInit() {
-    this.route.paramMap
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((params: ParamMap) => {
-        this.config.currentPage = params.get("pagenum");
-        this.blogPost$ = this.blogService.getAllPosts();
-      });
-  }
-
   delete(postId: string) {
     if (confirm("Are you sure?")) {
       this.blogService.deletePost(postId).then(() => {
@@ -51,10 +66,5 @@ export class BlogCardComponent implements OnInit, OnDestroy {
         this.snackBarService.showSnackBar("Blog post deleted successfully");
       });
     }
-  }
-
-  ngOnDestroy() {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 }

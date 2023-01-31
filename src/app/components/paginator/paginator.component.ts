@@ -13,7 +13,7 @@ export class PaginatorComponent {
   @Input()
   config: any;
 
-  constructor(private router: Router) {}
+  constructor(private readonly router: Router) {}
 
   pageChange(newPage: number) {
     this.router.navigate(["/page/", newPage]);

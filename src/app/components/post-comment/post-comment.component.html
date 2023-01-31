@@ -1,0 +1,79 @@
+<ng-template #anonymousUser>
+  <mat-card class="my-3 mat-elevation-z2">
+    <mat-card-content>
+      <a (click)="login()">Login with Google</a> to post comments
+    </mat-card-content>
+  </mat-card>
+</ng-template>
+<mat-card
+  *ngIf="appUser$ | async as appUser; else anonymousUser"
+  class="my-2 mat-elevation-z2"
+>
+  <mat-card-header>
+    <mat-card-title> Leave a Reply </mat-card-title>
+    <mat-card-subtitle>
+      Your email address will not be published. Required fields are marked *
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form
+      #commentForm="ngForm"
+      (ngSubmit)="commentForm.form.valid && onCommentPost(commentForm)"
+      novalidate
+      class="mt-3"
+    >
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Name</mat-label>
+        <input
+          matInput
+          placeholder="Name"
+          name="commentedBy"
+          [(ngModel)]="comments.commentedBy"
+          #commentedBy="ngModel"
+          required
+        />
+        <mat-error *ngIf="commentForm.submitted && commentedBy.errors?.required"
+          >Name is required</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          placeholder="Email"
+          name="email"
+          [(ngModel)]="comments.email"
+          #email="ngModel"
+          email
+          required
+        />
+        <mat-error *ngIf="commentForm.submitted && email.errors?.required"
+          >Email is required</mat-error
+        >
+        <mat-error *ngIf="commentForm.submitted && email.errors?.email"
+          >Invalid email</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Comment</mat-label>
+        <textarea
+          matInput
+          placeholder="Comment"
+          name="content"
+          [(ngModel)]="comments.content"
+          #content="ngModel"
+          required
+        ></textarea>
+        <mat-error *ngIf="commentForm.submitted && content.errors?.required"
+          >Comment is required</mat-error
+        >
+      </mat-form-field>
+      <div>
+        <button type="submit" mat-raised-button color="primary">
+          Post Comment
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

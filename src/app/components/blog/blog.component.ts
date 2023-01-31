@@ -1,36 +1,35 @@
-import { Component, OnDestroy } from "@angular/core";
-import { Post } from "src/app/models/post";
-import { ActivatedRoute, ParamMap } from "@angular/router";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 import { BlogService } from "src/app/services/blog.service";
-import { Observable, Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
-
+import { EMPTY } from "rxjs";
+import { switchMap } from "rxjs/operators";
 import { faCalendar, faUser } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: "app-blog",
   templateUrl: "./blog.component.html",
   styleUrls: ["./blog.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BlogComponent implements OnDestroy {
-  postData$: Observable<Post>;
-  postId;
-  private unsubscribe$ = new Subject<void>();
+export class BlogComponent {
+  postId: string;
 
   faCalendar = faCalendar;
   faUser = faUser;
 
-  constructor(private route: ActivatedRoute, private blogService: BlogService) {
-    this.route.paramMap
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((params: ParamMap) => {
-        this.postId = params.get("id");
-        this.postData$ = this.blogService.getPostbyId(this.postId);
-      });
-  }
+  blog$ = this.activatedRoute.paramMap.pipe(
+    switchMap((params) => {
+      this.postId = params.get("id");
+      if (this.postId) {
+        return this.blogService.getPostbyId(this.postId);
+      } else {
+        return EMPTY;
+      }
+    })
+  );
 
-  ngOnDestroy() {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
-  }
+  constructor(
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly blogService: BlogService
+  ) {}
 }

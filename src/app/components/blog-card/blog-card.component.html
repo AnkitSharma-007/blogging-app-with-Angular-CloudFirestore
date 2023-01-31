@@ -3,9 +3,10 @@
     <mat-spinner></mat-spinner>
   </div>
 </ng-template>
-<ng-container *ngIf="blogPost$ | async as blogPost; else loading">
-  <ng-container *ngIf="blogPost?.length > 0; else noData">
-    <div *ngFor="let post of blogPost | paginate : config">
+
+<ng-container *ngIf="vm$ | async as vm; else loading">
+  <ng-container *ngIf="vm.blogList?.length > 0; else noData">
+    <div *ngFor="let post of vm.blogList | paginate : config">
       <mat-card class="mat-elevation-z2 mb-3">
         <mat-card-header>
           <a
@@ -15,12 +16,12 @@
             <h2>{{ post.title }}</h2>
           </a>
         </mat-card-header>
-        <mat-card-content>
+        <mat-card-content class="my-2">
           <div [innerHTML]="post.content | excerpt"></div>
         </mat-card-content>
         <mat-divider></mat-divider>
-        <mat-card-actions align="end">
-          <ng-container *ngIf="(appUser$ | async)?.isAdmin">
+        <mat-card-actions align="end" class="my-2">
+          <ng-container *ngIf="vm.appUser?.isAdmin">
             <button
               class="mx-2"
               mat-raised-button

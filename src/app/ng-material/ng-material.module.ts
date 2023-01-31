@@ -27,7 +27,6 @@ const importedMatModules = [
 ];
 
 @NgModule({
-  declarations: [],
   imports: [CommonModule, importedMatModules],
   exports: [importedMatModules],
 })

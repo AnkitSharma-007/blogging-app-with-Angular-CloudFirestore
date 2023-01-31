@@ -29,6 +29,7 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
 import { AngularFireModule } from "@angular/fire/compat";
 import { WebsiteInfoComponent } from './components/website-info/website-info.component';
+import { PostCommentComponent } from './components/post-comment/post-comment.component';
 
 const customConfig: ShareButtonsConfig = {
   autoSetMeta: true,
@@ -51,6 +52,7 @@ const customConfig: ShareButtonsConfig = {
     PaginatorComponent,
     AuthorProfileComponent,
     WebsiteInfoComponent,
+    PostCommentComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),

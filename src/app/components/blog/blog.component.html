@@ -1,14 +1,14 @@
-<ng-container *ngIf="postData$ | async as postData; else loader">
-  <mat-card class="mt-3 p-4 mat-elevation-z2 bg-white">
+<ng-container *ngIf="blog$ | async as blog; else loader">
+  <mat-card class="mt-3 p-1 mat-elevation-z2 bg-white">
     <mat-card-header>
       <mat-card-title>
-        <h1 class="my-2 display-4">{{ postData?.title }}</h1>
+        <h1 class="my-2 display-4">{{ blog?.title }}</h1>
       </mat-card-title>
       <mat-card-subtitle class="my-4">
         <fa-icon [icon]="faCalendar"></fa-icon>
-        {{ postData?.createdDate | date : "longDate" }}
+        {{ blog?.createdDate | date : "longDate" }}
         <fa-icon class="ms-2" [icon]="faUser"></fa-icon>
-        {{ postData?.author | titlecase }}
+        {{ blog?.author | titlecase }}
       </mat-card-subtitle>
     </mat-card-header>
 
@@ -17,7 +17,7 @@
     </mat-card-content>
 
     <mat-card-content class="py-3 align-items-center align-content-center">
-      <div [innerHTML]="postData?.content"></div>
+      <div [innerHTML]="blog?.content"></div>
     </mat-card-content>
   </mat-card>
 </ng-container>
@@ -28,5 +28,6 @@
 </ng-template>
 <app-social-share></app-social-share>
 <mat-divider></mat-divider>
+<app-post-comment [blogId]="postId"></app-post-comment>
 <app-comments [blogId]="postId"></app-comments>
 <app-scroller></app-scroller>

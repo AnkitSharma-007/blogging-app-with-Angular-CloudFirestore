@@ -14,10 +14,10 @@ export class AuthService {
   appUser$: Observable<AppUser>;
 
   constructor(
-    public afAuth: AngularFireAuth,
-    private route: ActivatedRoute,
-    private router: Router,
-    private db: AngularFirestore
+    private readonly afAuth: AngularFireAuth,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly db: AngularFirestore
   ) {
     // Get the auth state, then fetch the Firestore user document or return null
     this.appUser$ = this.afAuth.authState.pipe(

@@ -8,7 +8,7 @@ import { Comments } from "../models/comment";
   providedIn: "root",
 })
 export class CommentService {
-  constructor(private db: AngularFirestore) {}
+  constructor(private readonly db: AngularFirestore) {}
 
   saveComment(comment: Comments) {
     const commentData = JSON.parse(JSON.stringify(comment));

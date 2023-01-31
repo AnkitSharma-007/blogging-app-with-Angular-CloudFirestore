@@ -1,54 +1,51 @@
-import { Component, OnInit, Input, OnDestroy } from "@angular/core";
-import { DatePipe } from "@angular/common";
+import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 import { AppUser } from "src/app/models/appuser";
 import { Comments } from "src/app/models/comment";
 import { CommentService } from "src/app/services/comment.service";
 import { AuthService } from "src/app/services/auth.service";
+import { combineLatestWith, map } from "rxjs/operators";
 import { SnackbarService } from "src/app/services/snackbar.service";
-import { Observable, Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { Observable } from "rxjs";
+
+class Vm {
+  commentList: Comments[];
+  appUser: AppUser;
+
+  constructor() {
+    this.commentList = [];
+    this.appUser = new AppUser();
+  }
+}
 
 @Component({
   selector: "app-comments",
   templateUrl: "./comments.component.html",
   styleUrls: ["./comments.component.scss"],
-  providers: [DatePipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CommentsComponent implements OnInit, OnDestroy {
+export class CommentsComponent {
   @Input()
-  blogId: string;
+  set blogId(value: string) {
+    this.vm$ = this.commentService.getAllCommentsForBlog(value).pipe(
+      combineLatestWith(this.authService.appUser$),
+      map(([comments, user]) => {
+        let commentVm = new Vm();
 
-  appUser: AppUser;
-  public comments = new Comments();
-  commentList$: Observable<Comments[]>;
+        commentVm.appUser = user;
+        commentVm.commentList = comments;
 
-  private unsubscribe$ = new Subject<void>();
+        return commentVm;
+      })
+    );
+  }
+
+  vm$: Observable<Vm>;
 
   constructor(
-    private datePipe: DatePipe,
-    private commentService: CommentService,
-    private authService: AuthService,
-    private snackBarService: SnackbarService
+    private readonly commentService: CommentService,
+    private readonly authService: AuthService,
+    private readonly snackBarService: SnackbarService
   ) {}
-
-  ngOnInit() {
-    this.authService.appUser$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((appUser) => (this.appUser = appUser));
-
-    this.commentList$ = this.commentService.getAllCommentsForBlog(this.blogId);
-  }
-
-  onCommentPost(commentForm) {
-    this.comments.commentDate = this.datePipe.transform(
-      Date.now(),
-      "MM-dd-yyyy HH:mm:ss"
-    );
-    this.comments.blogId = this.blogId;
-    this.commentService
-      .saveComment(this.comments)
-      .then(commentForm.resetForm());
-  }
 
   deleteComment(commentId) {
     if (confirm("Do you want to delete this comment!!!")) {
@@ -56,14 +53,5 @@ export class CommentsComponent implements OnInit, OnDestroy {
         this.snackBarService.showSnackBar("Comment Deleted successfully");
       });
     }
-  }
-
-  login() {
-    this.authService.login();
-  }
-
-  ngOnDestroy() {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 import {
   faTwitter,
   faFacebook,
@@ -10,10 +10,11 @@ import {
   selector: "app-author-profile",
   templateUrl: "./author-profile.component.html",
   styleUrls: ["./author-profile.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthorProfileComponent {
   twitterIcon = faTwitter;
-  facebooIcon = faFacebook;
+  facebookIcon = faFacebook;
   githubIcon = faGithub;
   linkedinIcon = faLinkedin;
 }

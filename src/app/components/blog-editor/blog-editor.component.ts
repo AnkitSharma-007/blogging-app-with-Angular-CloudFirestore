@@ -3,11 +3,11 @@ import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { Post } from "src/app/models/post";
 import { DatePipe } from "@angular/common";
 import { BlogService } from "src/app/services/blog.service";
-import { Router, ActivatedRoute, ParamMap } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { AppUser } from "src/app/models/appuser";
 import { AuthService } from "src/app/services/auth.service";
-import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { EMPTY, ReplaySubject } from "rxjs";
+import { switchMap, takeUntil } from "rxjs/operators";
 
 @Component({
   selector: "app-blog-editor",
@@ -22,47 +22,30 @@ export class BlogEditorComponent implements OnInit, OnDestroy {
   formTitle = "Add";
   postId;
   appUser: AppUser;
-  private unsubscribe$ = new Subject<void>();
+  private destroyed$ = new ReplaySubject<void>(1);
 
   constructor(
-    private route: ActivatedRoute,
-    private datePipe: DatePipe,
-    private blogService: BlogService,
-    private router: Router,
-    private authService: AuthService
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly datePipe: DatePipe,
+    private readonly blogService: BlogService,
+    private readonly router: Router,
+    private readonly authService: AuthService
   ) {
-    this.route.paramMap
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((params: ParamMap) => {
-        this.postId = params.get("id");
-      });
+    this.setEditorConfig();
   }
 
   ngOnInit() {
     this.authService.appUser$
-      .pipe(takeUntil(this.unsubscribe$))
+      .pipe(takeUntil(this.destroyed$))
       .subscribe((appUser) => (this.appUser = appUser));
 
-    this.setEditorConfig();
-    if (this.postId) {
-      this.formTitle = "Edit";
-      this.blogService
-        .getPostbyId(this.postId)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe((result) => {
-          this.setPostFormData(result);
-        });
-    }
-  }
-  setPostFormData(postFormData) {
-    this.postData.title = postFormData.title;
-    this.postData.content = postFormData.content;
+    this.fetchBlogDetails();
   }
 
   saveBlogPost() {
     if (this.postId) {
       this.blogService.updatePost(this.postId, this.postData).then(() => {
-        this.router.navigate(["/"]);
+        this.navigateToHome();
       });
     } else {
       this.postData.createdDate = this.datePipe.transform(
@@ -71,12 +54,26 @@ export class BlogEditorComponent implements OnInit, OnDestroy {
       );
       this.postData.author = this.appUser.name;
       this.blogService.createPost(this.postData).then(() => {
-        this.router.navigate(["/"]);
+        this.navigateToHome();
       });
     }
   }
 
-  setEditorConfig() {
+  navigateToHome() {
+    this.router.navigate(["/"]);
+  }
+
+  ngOnDestroy() {
+    this.destroyed$.next();
+    this.destroyed$.complete();
+  }
+
+  private setPostFormData(postFormData) {
+    this.postData.title = postFormData.title;
+    this.postData.content = postFormData.content;
+  }
+
+  private setEditorConfig() {
     this.ckeConfig = {
       removePlugins: ["ImageUpload", "MediaEmbed", "EasyImage"],
       heading: {
@@ -128,12 +125,26 @@ export class BlogEditorComponent implements OnInit, OnDestroy {
     };
   }
 
-  cancel() {
-    this.router.navigate(["/"]);
-  }
-
-  ngOnDestroy() {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+  private fetchBlogDetails() {
+    this.activatedRoute.paramMap
+      .pipe(
+        switchMap((params) => {
+          this.postId = params.get("id");
+          if (this.postId) {
+            return this.blogService.getPostbyId(this.postId);
+          } else {
+            return EMPTY;
+          }
+        }),
+        takeUntil(this.destroyed$)
+      )
+      .subscribe({
+        next: (result) => {
+          this.setPostFormData(result);
+        },
+        error: (error) => {
+          console.error("Error ocurred while fetching blog data : ", error);
+        },
+      });
   }
 }

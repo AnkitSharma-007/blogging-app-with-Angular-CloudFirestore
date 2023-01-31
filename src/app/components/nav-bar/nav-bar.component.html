@@ -1,7 +1,7 @@
-<mat-toolbar color="primary" class="mat-elevation-z2">
+<mat-toolbar color="primary" class="mat-elevation-z4">
   <mat-toolbar-row>
     <button mat-button [routerLink]="['/']">My blog</button>
-    <ng-container *ngIf="appUser">
+    <ng-container *ngIf="appUser$ | async as appUser; else anonymousUser">
       <button
         mat-button
         [routerLinkActive]="['link-active']"
@@ -9,32 +9,38 @@
       >
         Add Post
       </button>
+      <span class="spacer"></span>
+      <ng-container>
+        <div>
+          <img
+            mat-card-avatar
+            class="user-avatar"
+            src="{{ appUser.photoURL }}"
+          />
+        </div>
+
+        <button mat-button [matMenuTriggerFor]="menu">
+          {{ appUser.name | titlecase }}
+          <mat-icon>arrow_drop_down</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="logout()">Logout</button>
+        </mat-menu>
+      </ng-container>
     </ng-container>
-    <span class="spacer"></span>
+    <ng-template #anonymousUser>
+      <span class="spacer"></span>
+      <button mat-button (click)="login()">Login with Google</button>
+    </ng-template>
     <div class="me-2">
       <button mat-button>
         <a
           href="https://github.com/AnkitSharma-007/blogging-app-with-Angular-CloudFirestore"
           target="_blank"
-          ><i class="fa fa-github"></i> Source Code</a
+          ><fa-icon class="github-icon" [icon]="githubIcon"></fa-icon> Source
+          Code</a
         >
       </button>
     </div>
-    <ng-template #anonymousUser>
-      <button mat-button (click)="login()">Login with Google</button>
-    </ng-template>
-    <ng-container *ngIf="appUser; else anonymousUser">
-      <div>
-        <img mat-card-avatar class="user-avatar" src="{{ appUser.photoURL }}" />
-      </div>
-
-      <button mat-button [matMenuTriggerFor]="menu">
-        {{ appUser.name | titlecase }}
-        <mat-icon>arrow_drop_down</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="logout()">Logout</button>
-      </mat-menu>
-    </ng-container>
   </mat-toolbar-row>
 </mat-toolbar>
